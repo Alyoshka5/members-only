@@ -12,7 +12,12 @@ const UserSchema = new Schema({
     lastName: { type: String, required: true, maxLength: 50 },
     email: { type: String, required: true, validate: [validateEmail, 'Please provide a valid email address'] },
     password: { type: String, required: true },
-    status: { type: String, required: true },
+    status: {
+        type: String,
+        required: true,
+        enum: ['User', 'Member'],
+        default: 'User'
+    },
     isAdmin: Boolean
 });
 
