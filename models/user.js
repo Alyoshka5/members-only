@@ -16,8 +16,8 @@ const UserSchema = new Schema({
     isAdmin: Boolean
 });
 
-UserSchema.virtual('ur').get(function() {
-    return `/users/${this._id}`;
+UserSchema.virtual('url').get(function() {
+    return `/user/${this._id}`;
 });
 
 module.exports = mongoose.model('User', UserSchema);
