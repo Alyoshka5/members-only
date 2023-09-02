@@ -1,0 +1,24 @@
+extends ../layout 
+
+block content 
+    h1 Sign Up 
+
+    form(method='POST')
+
+        div
+            label(for="firstName") First Name:
+            input#firstName(type="text" name="firstName" )
+        
+        div
+            label(for="lastName") Last Name:
+            input#lastName(type="text" name="lastName")
+
+        div
+            label(for="username") Email:
+            input#username(type="email" name="username")
+
+        div
+            label(for="username") Password:
+            input#password(type="password" name="password")
+
+        button(type="submit") Sign Up
