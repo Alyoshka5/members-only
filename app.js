@@ -14,6 +14,8 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const postsRouter = require('./routes/posts');
 
+const User = require('./models/user');
+
 const app = express();
 
 // database setup
@@ -41,7 +43,7 @@ passport.use(
       }
       return done(null, user);
     } catch (err) {
-      return next(err);
+      return done(err);
     }
   })
 );
