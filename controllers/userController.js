@@ -5,7 +5,8 @@ const { body, validationResult } = require('express-validator')
 const User = require('../models/user');
 
 exports.signUpGet = (req, res, next) => {
-    res.render('users/sign-up', { title: 'Sign Up' });
+  if (req.user) return res.redirect('/');
+  res.render('users/sign-up', { title: 'Sign Up' });
 };
 
 exports.signUpPost = [
@@ -64,8 +65,8 @@ exports.signUpPost = [
   })
 ]
 
-
 exports.logInGet = (req, res, next) => {
+  if (req.user) return res.redirect('/');
   res.render('users/log-in', { title: 'Log In' });
 }
 
