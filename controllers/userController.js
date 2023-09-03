@@ -34,8 +34,15 @@ exports.signUpPost = [
     .isLength({ min: 8 })
     .escape(),
 
+  body('confirmPassword')
+    .trim()
+    .escape(),
+
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+
+    if (req.body.confirmPassword !== req.body.password)
+      errors.errors.push({ msg: 'Passwords must match' });
 
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       const user = new User({
