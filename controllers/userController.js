@@ -5,7 +5,7 @@ const { body, validationResult } = require('express-validator')
 const User = require('../models/user');
 
 exports.signUpGet = (req, res, next) => {
-    res.render('users/sign-up');
+    res.render('users/sign-up', { title: 'Sign Up' });
 };
 
 exports.signUpPost = [
@@ -48,6 +48,7 @@ exports.signUpPost = [
 
     if (!errors.isEmpty()) {
       res.render('users/sign-up', {
+        title: 'Sign Up',
         user,
         errors: errors.array()
       });
@@ -65,7 +66,7 @@ exports.signUpPost = [
 
 
 exports.logInGet = (req, res, next) => {
-  res.render('users/log-in');
+  res.render('users/log-in', { title: 'Log In' });
 }
 
 exports.logInPost = passport.authenticate('local', {
