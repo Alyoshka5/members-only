@@ -1,6 +1,8 @@
 extends ../layout 
 
 block content 
+    a(href="/") Home
+    
     h1 Sign Up 
 
     form(method='POST')
@@ -22,3 +24,6 @@ block content
             input#password(type="password" name="password")
 
         button(type="submit") Sign Up
+
+    p Already have an account?
+    a(href="/log-in") Log In 

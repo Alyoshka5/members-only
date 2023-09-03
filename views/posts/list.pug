@@ -1,0 +1,14 @@
+extends ../layout 
+
+block content
+    if currentUser 
+        h3= currentUser.fullName
+        a(href="/log-out") Log Out 
+        
+    else 
+        a(href="/log-in") Log In
+        br
+        a(href="/sign-up") Sign Up
+
+    h1 Posts
+
