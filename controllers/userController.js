@@ -42,6 +42,10 @@ exports.signUpPost = [
       password: req.body.password
     });
 
+    const userWithEmail = await User.findOne({ email: user.email }).exec();
+    if (userWithEmail)
+      errors.errors.push({ msg: 'A user with this email already exists' });
+
     if (!errors.isEmpty()) {
       res.render('users/sign-up', {
         user,
