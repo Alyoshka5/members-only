@@ -30,19 +30,16 @@ exports.signUpPost = [
     .escape(),
     
   body('password', 'Password must be at least 8 characters long')
-    .trim()
-    .isLength({ min: 8 })
-    .escape(),
+    .isLength({ min: 8 }),
 
   body('confirmPassword')
-    .trim()
-    .escape(),
+    .custom((password, { req }) => {
+      return password === req.body.password;
+    })
+    .withMessage('Passwords must match'),
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
-
-    if (req.body.confirmPassword !== req.body.password)
-      errors.errors.push({ msg: 'Passwords must match' });
 
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       const user = new User({
