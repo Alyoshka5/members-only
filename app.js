@@ -6,7 +6,8 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 
 require('dotenv').config();
 
@@ -38,9 +39,12 @@ passport.use(
       if (!user) {
         return done(null, false, { message: 'Incorrect username' });
       }
-      if (password !== user.password) {
+
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {
         return done(null, false, { message: 'Incorrect password' });
       }
+
       return done(null, user);
     } catch (err) {
       return done(err);
