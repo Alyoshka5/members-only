@@ -1,4 +1,5 @@
 const asyncHandler = require('express-async-handler');
+const passport = require('passport');
 
 const User = require('../models/user');
 
@@ -20,4 +21,13 @@ exports.signUpPost = asyncHandler(async (req, res, next) => {
     } catch (err) {
       return next(err);
     }
-})
+});
+
+exports.logInGet = (req, res, next) => {
+  res.render('users/log-in');
+}
+
+exports.logInPost = passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/log-in'
+});

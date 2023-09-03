@@ -1,0 +1,16 @@
+extends ../layout 
+
+block content 
+    h1 Log In
+
+    form(method='POST')
+
+        div
+            label(for="email") Email:
+            input#email(type="email" name="username")
+
+        div
+            label(for="password") Password:
+            input#password(type="password" name="password")
+
+        button(type="submit") Log In
