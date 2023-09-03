@@ -11,7 +11,7 @@ const UserSchema = new Schema({
     firstName: { type: String, required: true, maxLength: 50 },
     lastName: { type: String, required: true, maxLength: 50 },
     email: { type: String, required: true, validate: [validateEmail, 'Please provide a valid email address'] },
-    password: { type: String, required: true, minLength: 8 },
+    password: { type: String, required: true },
     status: {
         type: String,
         required: true,

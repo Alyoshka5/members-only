@@ -11,17 +11,20 @@ exports.signUpGet = (req, res, next) => {
 exports.signUpPost = [
   body('firstName', 'First name must be between 1 and 50 characters')
     .trim()
+    .isString()
     .isLength({ min: 1, max: 50 })
     .escape(),
     
   body('lastName', 'Last name must be between 1 and 50 characters')
     .trim()
+    .isString()
     .isLength({ min: 1, max: 50 })
     .escape(),
     
   body('username', 'Must provide a valid email address')
     .trim()
-    .matches(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    .isEmail()
+    .normalizeEmail()
     .escape(),
     
   body('password', 'Password must be at least 8 characters long')
@@ -64,7 +67,7 @@ exports.logInGet = (req, res, next) => {
 exports.logInPost = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/log-in'
-});
+})
 
 exports.logOutGet = (req, res, next) => {
   req.logout(function (err) {
