@@ -17,7 +17,10 @@ exports.signUpPost = asyncHandler(async (req, res, next) => {
       });
   
       await user.save();
-      res.redirect('/');
+      req.login(user, function(err) {
+        if (err) next(err);
+        return res.redirect('/');
+      })
     } catch (err) {
       return next(err);
     }
