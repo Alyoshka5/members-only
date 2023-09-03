@@ -31,3 +31,10 @@ exports.logInPost = passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/log-in'
 });
+
+exports.logOutGet = (req, res, next) => {
+  req.logout(function (err) {
+    if (err) return next(err);
+    res.redirect('/');
+  })
+}
