@@ -9,21 +9,26 @@ block content
 
         div
             label(for="firstName") First Name:
-            input#firstName(type="text" name="firstName" )
+            input#firstName(type="text" name="firstName" value=(user !== undefined ? user.firstName : ''))
         
         div
             label(for="lastName") Last Name:
-            input#lastName(type="text" name="lastName")
+            input#lastName(type="text" name="lastName" value=(user !== undefined ? user.lastName : ''))
 
         div
             label(for="email") Email:
-            input#email(type="email" name="username")
+            input#email(type="email" name="username" value=(user !== undefined ? user.email : ''))
 
         div
             label(for="password") Password:
             input#password(type="password" name="password")
 
         button(type="submit") Sign Up
+
+    if errors
+        ul
+            for error in errors
+                li= error.msg
 
     p Already have an account?
     a(href="/log-in") Log In 
