@@ -198,7 +198,10 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
 
 exports.joinGet = asyncHandler(async (req, res, next) => {
   if (!(req.user && req.user.status === 'user')) return res.redirect('/');
-  res.render('users/join', { title: 'Join the club' });
+  res.render('users/join', {
+    title: 'Join the club',
+    applyingStatus: 'admin'
+  });
 });
 
 exports.joinPost = asyncHandler(async (req, res, next) => {
@@ -210,6 +213,32 @@ exports.joinPost = asyncHandler(async (req, res, next) => {
     const error = 'Invalid code'
     res.render('users/join', {
       title: 'Join the club',
+      applyingStatus: 'member',
+      error
+    });
+    return;
+  }
+  res.redirect('/');
+});
+
+exports.adminGet = asyncHandler(async (req, res, next) => {
+  if (!(req.user && req.user.status === 'member')) return res.redirect('/');
+  res.render('users/join', {
+    title: 'Become an admin',
+    applyingStatus: 'admin'
+  });
+});
+
+exports.adminPost = asyncHandler(async (req, res, next) => {
+  if (passcodes.adminCodes.includes(req.body.entryCode)) {
+    req.user.status = 'admin';
+    const user = new User(req.user);
+    await user.save();
+  } else {
+    const error = 'Invalid code'
+    res.render('users/join', {
+      title: 'Become an admin',
+      applyingStatus: 'admin',
       error
     });
     return;

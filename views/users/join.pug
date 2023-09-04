@@ -2,7 +2,7 @@ extends ../layout
 
 block content
 
-    h3 Enter an entry code to become a member
+    h3 Enter an entry code to become #{applyingStatus === 'member' ? 'a member' : 'an admin'}
     form(action="", method="post") 
         input(name='entryCode' value=(entryCode || ''))
 

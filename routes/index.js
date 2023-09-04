@@ -38,6 +38,10 @@ router.get('/user/join', userController.joinGet);
 
 router.post('/user/join', userController.joinPost);
 
+router.get('/user/admin', userController.adminGet);
+
+router.post('/user/admin', userController.adminPost);
+
 router.get('/user/:id/update', userController.updateGet);
 
 router.post('/user/:id/update', userController.updatePost);

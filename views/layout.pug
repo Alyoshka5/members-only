@@ -11,6 +11,11 @@ html
       if currentUser.status === 'user'
         div 
           a(href="/user/join") Join the club
+
+      if currentUser.status === 'member'
+        div 
+          a(href="/user/admin") Become an admin
+
       a(href=currentUser.url)
         h1= currentUser.fullName
         
