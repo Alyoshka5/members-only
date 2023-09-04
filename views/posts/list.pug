@@ -6,7 +6,7 @@ block content
     for post in posts 
         a(href=post.url style='color: black') 
             div#post
-                if (currentUser && (['member', 'admin'].includes(currentUser.status) || currentUser._id.toString() === post.author.toString()))
+                if (currentUser && (['member', 'admin'].includes(currentUser.status) || currentUser._id.toString() === post.author._id.toString()))
                     div Posted by #{post.author.fullName}
                     div #{post.datePostedFormatted} at #{post.timePosted}
             
