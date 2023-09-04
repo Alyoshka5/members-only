@@ -75,7 +75,7 @@ exports.createPost = [
 exports.updateGet = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id).exec();
 
-    if (req.user._id.toString() !== post.author.toString())
+    if (!req.user || (req.user._id.toString() !== post.author.toString()))
         return res.redirect(post.url);
 
     if (post === null) {
@@ -131,7 +131,7 @@ exports.updatePost = [
 exports.deleteGet = asyncHandler(async (req, res, next) => {
     const post = await Post.findById(req.params.id).exec();
 
-    if (req.user._id.toString() !== post.author.toString() && req.user.status !== 'admin')
+    if (!req.user || (req.user._id.toString() !== post.author.toString() && req.user.status !== 'admin'))
         return res.redirect(post.url);
     
     await Post.findByIdAndRemove(req.params.id);
