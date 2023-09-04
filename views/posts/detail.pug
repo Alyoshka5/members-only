@@ -1,9 +1,13 @@
 extends ../layout 
 
 block content
-    if (currentUser._id.toString() === post.author._id.toString())
+    if (currentUser && (currentUser._id.toString() === post.author._id.toString()))
         div
             a(href=post.url + '/update') Update Post 
+
+    if (currentUser && (currentUser._id.toString() === post.author._id.toString() || currentUser.status === 'admin'))
+        div
+            a(href=post.url + '/delete') Delete Post 
 
     h1= post.title
 

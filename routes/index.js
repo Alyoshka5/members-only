@@ -18,8 +18,6 @@ router.post('/post/:id/update', postController.updatePost);
 
 router.get('/post/:id/delete', postController.deleteGet);
 
-router.post('/post/:id/delete', postController.deletePost);
-
 router.get('/post/:id', postController.detail);
 
 router.get('/posts', postController.list);

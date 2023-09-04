@@ -129,9 +129,11 @@ exports.updatePost = [
 ]
 
 exports.deleteGet = asyncHandler(async (req, res, next) => {
-    res.send('');
-});
+    const post = await Post.findById(req.params.id).exec();
 
-exports.deletePost = asyncHandler(async (req, res, next) => {
-    res.send('');
+    if (req.user._id.toString() !== post.author.toString() && req.user.status !== 'admin')
+        return res.redirect(post.url);
+    
+    await Post.findByIdAndRemove(req.params.id);
+    res.redirect('/');
 });
