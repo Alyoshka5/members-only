@@ -1,0 +1,20 @@
+extends ../layout 
+
+block content
+
+    h3 Create post
+    form(action="", method="post") 
+        div
+            label(for="title") Title: 
+            input#title(name='title' value=(post !== undefined ? post.title : ''))
+        br
+        div
+            textarea#content(name='content'  value=(post !== undefined ? post.content : '') placeholder='Share your message...' rows='6' style='width: 300px;')
+    
+        button(type="submit") Post
+
+    if errors
+        ul
+            for error in errors
+                li= error.msg
+
