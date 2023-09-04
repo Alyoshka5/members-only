@@ -181,9 +181,15 @@ exports.updatePost = [
 ]
 
 exports.deleteGet = asyncHandler(async (req, res, next) => {
-  res.send('');
+  const user = await User.findById(req.params.id).exec();
+  if (!(req.user && req.user._id.toString() === user._id.toString())) return res.redirect(user.url);
+
+  res.render('users/delete', { title: 'Delete Account' });
 });
 
 exports.deletePost = asyncHandler(async (req, res, next) => {
-  res.send('');
+  await User.findByIdAndRemove(req.params.id);
+  await Post.deleteMany({ author: req.params.id });
+
+  res.redirect('/');
 });
