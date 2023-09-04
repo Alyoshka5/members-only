@@ -34,5 +34,15 @@ router.post('/log-in', userController.logInPost);
 
 router.get('/log-out', userController.logOutGet);
 
+router.get('/user/:id/update', userController.updateGet);
+
+router.get('/user/:id/update', userController.updatePost);
+
+router.get('/user/:id/delete', userController.deleteGet);
+
+router.get('/user/:id/delete', userController.deletePost);
+
+router.get('/user/:id', userController.detail);
+
 
 module.exports = router;

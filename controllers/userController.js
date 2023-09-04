@@ -87,3 +87,23 @@ exports.logOutGet = (req, res, next) => {
     res.redirect('/');
   })
 }
+
+exports.detail = asyncHandler(async (req, res, next) => {
+	res.send('');
+});
+
+exports.updateGet = asyncHandler(async (req, res, next) => {
+  res.send('');
+});
+
+exports.updatePost = asyncHandler(async (req, res, next) => {
+  res.send('');
+});
+
+exports.deleteGet = asyncHandler(async (req, res, next) => {
+  res.send('');
+});
+
+exports.deletePost = asyncHandler(async (req, res, next) => {
+  res.send('');
+});
