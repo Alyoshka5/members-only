@@ -1,6 +1,10 @@
 extends ../layout 
 
 block content
+    if (currentUser._id.toString() === post.author._id.toString())
+        div
+            a(href=post.url + '/update') Update Post 
+
     h1= post.title
 
     if (currentUser && (['member', 'admin'].includes(currentUser.status) || currentUser._id.toString() === post.author._id.toString()))
