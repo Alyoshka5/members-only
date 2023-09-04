@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
+const Post = require('../models/post');
 
 exports.signUpGet = (req, res, next) => {
   if (req.user) return res.redirect('/');
@@ -89,7 +90,19 @@ exports.logOutGet = (req, res, next) => {
 }
 
 exports.detail = asyncHandler(async (req, res, next) => {
-	res.send('');
+	const user = await User.findById(req.params.id).exec();
+
+	if (!(req.user && (['member', 'admin'].includes(req.user.status) || req.user._id.toString() === user._id.toString()))) {
+		return res.redirect('/');
+	}
+
+	const postsByUser = await Post.find({ author: user._id }).exec();
+
+	res.render('users/detail', {
+		title: 'View User',
+		user,
+		postsByUser
+	})
 });
 
 exports.updateGet = asyncHandler(async (req, res, next) => {

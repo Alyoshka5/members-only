@@ -5,7 +5,9 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     if currentUser 
-      h3= currentUser.fullName
+      a(href=currentUser.url)
+        h1= currentUser.fullName
+        
       a(href="/log-out") Log Out
 
     else 

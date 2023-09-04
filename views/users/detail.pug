@@ -1,0 +1,21 @@
+extends ../layout 
+
+block content
+    if (currentUser && (currentUser._id.toString() === user._id.toString()))
+        div
+            a(href=user.url + '/update') Update Account 
+
+        div
+            a(href=user.url + '/delete') Delete Account 
+
+    h1= user.fullName
+
+    h3 Posts by #{user.firstName}
+    
+    for post in postsByUser
+        a(href=post.url style='color: black')
+            div#post
+                div #{post.datePostedFormatted} at #{post.timePosted}
+        
+                h3= post.title 
+                p= post.content.length > 300 ? `${post.content.slice(0, 300)}...` : post.content
