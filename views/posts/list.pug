@@ -7,7 +7,7 @@ block content
         a(href=post.url style='color: black') 
             div#post
                 if (currentUser && (['member', 'admin'].includes(currentUser.status) || currentUser._id.toString() === post.author.toString()))
-                    div Posted by #{currentUser.fullName}
+                    div Posted by #{post.author.fullName}
                     div #{post.datePostedFormatted} at #{post.timePosted}
             
                 h3= post.title 
