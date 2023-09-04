@@ -5,9 +5,12 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     div
-          a(href="/") Home
+      a(href="/") Home
           
     if currentUser 
+      if currentUser.status === 'user'
+        div 
+          a(href="/user/join") Join the club
       a(href=currentUser.url)
         h1= currentUser.fullName
         

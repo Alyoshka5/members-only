@@ -1,0 +1,12 @@
+extends ../layout 
+
+block content
+
+    h3 Enter an entry code to become a member
+    form(action="", method="post") 
+        input(name='entryCode' value=(entryCode || ''))
+
+        button(type="submit") #{title}
+
+    p= error || ''
+

@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler');
 const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
+const passcodes = require('../passcodes');
 
 const User = require('../models/user');
 const Post = require('../models/post');
@@ -192,5 +193,26 @@ exports.deletePost = asyncHandler(async (req, res, next) => {
   await User.findByIdAndRemove(req.params.id);
   await Post.deleteMany({ author: req.params.id });
 
+  res.redirect('/');
+});
+
+exports.joinGet = asyncHandler(async (req, res, next) => {
+  if (!(req.user && req.user.status === 'user')) return res.redirect('/');
+  res.render('users/join', { title: 'Join the club' });
+});
+
+exports.joinPost = asyncHandler(async (req, res, next) => {
+  if (passcodes.memberCodes.includes(req.body.entryCode)) {
+    req.user.status = 'member';
+    const user = new User(req.user);
+    await user.save();
+  } else {
+    const error = 'Invalid code'
+    res.render('users/join', {
+      title: 'Join the club',
+      error
+    });
+    return;
+  }
   res.redirect('/');
 });

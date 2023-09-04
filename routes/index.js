@@ -34,6 +34,10 @@ router.post('/log-in', userController.logInPost);
 
 router.get('/log-out', userController.logOutGet);
 
+router.get('/user/join', userController.joinGet);
+
+router.post('/user/join', userController.joinPost);
+
 router.get('/user/:id/update', userController.updateGet);
 
 router.post('/user/:id/update', userController.updatePost);
