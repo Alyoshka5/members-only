@@ -1,0 +1,11 @@
+extends ../layout 
+
+block content
+    h1= post.title
+
+    if (currentUser && (['member', 'admin'].includes(currentUser.status) || currentUser._id.toString() === post.author.toString()))
+        div Posted by #{post.author.fullName}
+        div #{post.datePostedFormatted} at #{post.timePosted}
+
+    h3 Message:
+    p= post.content

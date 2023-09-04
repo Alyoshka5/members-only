@@ -12,7 +12,18 @@ exports.list = asyncHandler(async (req, res, next) => {
 });
 
 exports.detail = asyncHandler(async (req, res, next) => {
-    res.send('');
+    const post = await Post.findById(req.params.id).populate('author').exec();
+
+    if (post === null) {
+        const err = new Error('Post not found');
+        err.status = 404;
+        next(err);
+    }
+
+    res.render('posts/detail', {
+        title: 'View Post',
+        post
+    })
 });
 
 exports.createGet = asyncHandler(async (req, res, next) => {
