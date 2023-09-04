@@ -11,7 +11,7 @@ block content
         div
             textarea#content(name='content' placeholder='Share your message...' rows='6' style='width: 300px;')
                 | #{post !== undefined ? post.content : ''}
-        button(type="submit") Post
+        button(type="submit") #{title}
 
     if errors
         ul
