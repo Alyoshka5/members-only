@@ -10,4 +10,4 @@ block content
                 div #{post.datePostedFormatted} at #{post.timePosted}
         
             h3= post.title 
-            p= post.content
+            p= post.content.length > 300 ? `${post.content.slice(0, 300)}...` : post.content
