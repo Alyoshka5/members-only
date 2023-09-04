@@ -28,7 +28,9 @@ exports.detail = asyncHandler(async (req, res, next) => {
 
 exports.createGet = asyncHandler(async (req, res, next) => {
     if (req.user)
-        res.render('posts/form');
+        res.render('posts/form', {
+            title: 'Create Post'
+        });
     else
         res.redirect('/');
 });
@@ -58,7 +60,7 @@ exports.createPost = [
 
         if (!errors.isEmpty()) {
             res.render('posts/form', {
-                title: 'Members Only',
+                title: 'Create Post',
                 post,
                 errors: errors.array()
             });
