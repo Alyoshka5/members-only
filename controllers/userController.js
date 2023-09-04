@@ -8,7 +8,10 @@ const Post = require('../models/post');
 
 exports.signUpGet = (req, res, next) => {
   if (req.user) return res.redirect('/');
-  res.render('users/sign-up', { title: 'Sign Up' });
+  res.render('users/account-form', {
+    title: 'Sign Up',
+    action: 'create'
+  });
 };
 
 exports.signUpPost = [
@@ -55,9 +58,10 @@ exports.signUpPost = [
         errors.errors.push({ msg: 'A user with this email already exists' });
   
       if (!errors.isEmpty()) {
-        res.render('users/sign-up', {
+        res.render('users/account-form', {
           title: 'Sign Up',
           user,
+          action: 'create',
           errors: errors.array()
         });
         return;
@@ -106,12 +110,75 @@ exports.detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.updateGet = asyncHandler(async (req, res, next) => {
-  res.send('');
+  const user = await User.findById(req.params.id).exec();
+
+  if (user === null) {
+    const err = new Error('User not found');
+    err.status = 404;
+    return next(err);
+  }
+
+	if (!(req.user && req.user._id.toString() === user._id.toString())) {
+		return res.redirect('/');
+	}
+
+  res.render('users/account-form', {
+    title: 'Update account',
+    user,
+    action: 'update'
+  });
+
 });
 
-exports.updatePost = asyncHandler(async (req, res, next) => {
-  res.send('');
-});
+exports.updatePost = [
+  body('firstName', 'First name must be between 1 and 50 characters')
+    .trim()
+    .isString()
+    .isLength({ min: 1, max: 50 })
+    .escape(),
+    
+  body('lastName', 'Last name must be between 1 and 50 characters')
+    .trim()
+    .isString()
+    .isLength({ min: 1, max: 50 })
+    .escape(),
+    
+  body('username', 'Must provide a valid email address')
+    .trim()
+    .isEmail()
+    .normalizeEmail()
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const existingUser = await User.findById(req.params.id).exec();
+
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.username,
+      _id: req.params.id
+    });
+
+    const userWithEmail = await User.findOne({ email: user.email }).exec();
+    if (userWithEmail && user.email !== existingUser.email)
+      errors.errors.push({ msg: 'A user with this email already exists' });
+
+    if (!errors.isEmpty()) {
+      res.render('users/account-form', {
+        title: 'Update Account',
+        user,
+        action: 'update',
+        errors: errors.array()
+      });
+      return;
+    }
+  
+    await User.findByIdAndUpdate(req.params.id, user, {});
+    res.redirect(user.url);
+  })
+]
 
 exports.deleteGet = asyncHandler(async (req, res, next) => {
   res.send('');

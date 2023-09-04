@@ -1,10 +1,8 @@
 extends ../layout 
 
 block content 
-    div
-        a(href="/") Home
     
-    h1 Sign Up 
+    h1= title
 
     form(method='POST')
 
@@ -20,20 +18,22 @@ block content
             label(for="email") Email:
             input#email(type="email" name="username" value=(user !== undefined ? user.email : ''))
 
-        div
-            label(for="password") Password:
-            input#password(type="password" name="password")
+        if action === 'create'
+            div
+                label(for="password") Password:
+                input#password(type="password" name="password")
 
-        div
-            label(for="confirmPassword") Confirm Password:
-            input#confirmPassword(type="password" name="confirmPassword")
+            div
+                label(for="confirmPassword") Confirm Password:
+                input#confirmPassword(type="password" name="confirmPassword")
 
-        button(type="submit") Sign Up
+        button(type="submit")= title 
 
     if errors
         ul
             for error in errors
                 li= error.msg
 
-    p Already have an account?
-    a(href="/log-in") Log In 
+    if action === 'create'
+        p Already have an account?
+        a(href="/log-in") Log In 
