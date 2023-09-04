@@ -4,6 +4,9 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    div
+          a(href="/") Home
+          
     if currentUser 
       a(href=currentUser.url)
         h1= currentUser.fullName
