@@ -3,3 +3,11 @@ extends ../layout
 block content
     h1 Posts
 
+    for post in posts 
+        div#post
+            if (currentUser && (['member', 'admin'].includes(currentUser.status) || currentUser._id.toString() === post.author.toString()))
+                div Posted by #{currentUser.fullName}
+                div #{post.datePostedFormatted} at #{post.timePosted}
+        
+            h3= post.title 
+            p= post.content

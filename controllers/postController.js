@@ -4,7 +4,11 @@ const { body, validationResult } = require('express-validator');
 const Post = require('../models/post');
 
 exports.list = asyncHandler(async (req, res, next) => {
-    res.render('posts/list', { title: 'Members Only' });
+    const posts = await Post.find({}).sort({datePosted: -1}).exec();
+    res.render('posts/list', {
+        title: 'Members Only',
+        posts
+    });
 });
 
 exports.detail = asyncHandler(async (req, res, next) => {
