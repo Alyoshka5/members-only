@@ -119,7 +119,7 @@ exports.updateGet = asyncHandler(async (req, res, next) => {
   }
 
 	if (!(req.user && req.user._id.toString() === user._id.toString())) {
-		return res.redirect('/');
+		return res.redirect(user.url);
 	}
 
   res.render('users/account-form', {
@@ -158,6 +158,7 @@ exports.updatePost = [
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.username,
+      status: req.body.status,
       _id: req.params.id
     });
 

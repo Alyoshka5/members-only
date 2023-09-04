@@ -18,6 +18,7 @@ block content
             label(for="email") Email:
             input#email(type="email" name="username" value=(user !== undefined ? user.email : ''))
 
+
         if action === 'create'
             div
                 label(for="password") Password:
@@ -26,6 +27,9 @@ block content
             div
                 label(for="confirmPassword") Confirm Password:
                 input#confirmPassword(type="password" name="confirmPassword")
+
+        else
+            input(type="hidden", name="status" value=(user.status || 'user'))
 
         button(type="submit")= title 
 
