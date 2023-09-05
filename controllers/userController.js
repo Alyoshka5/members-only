@@ -2,10 +2,10 @@ const asyncHandler = require('express-async-handler');
 const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
-const passcodes = require('../passcodes');
 
 const User = require('../models/user');
 const Post = require('../models/post');
+const Passcode = require('../models/passcode');
 
 exports.signUpGet = (req, res, next) => {
   if (req.user) return res.redirect('/');
@@ -200,12 +200,15 @@ exports.joinGet = asyncHandler(async (req, res, next) => {
   if (!(req.user && req.user.status === 'user')) return res.redirect('/');
   res.render('users/join', {
     title: 'Join the club',
-    applyingStatus: 'admin'
+    applyingStatus: 'member'
   });
 });
 
 exports.joinPost = asyncHandler(async (req, res, next) => {
-  if (passcodes.memberCodes.includes(req.body.entryCode)) {
+  const passcodes = await Passcode.find({ forStatus: 'member' }, 'code').exec();
+  const passcodeMatch = await passcodes.reduce(async (match, passcode) => match || await bcrypt.compare(req.body.entryCode, passcode.code), false)
+  
+  if (passcodeMatch) {
     req.user.status = 'member';
     const user = new User(req.user);
     await user.save();

@@ -4,7 +4,7 @@ block content
 
     h3 Enter an entry code to become #{applyingStatus === 'member' ? 'a member' : 'an admin'}
     form(action="", method="post") 
-        input(name='entryCode' value=(entryCode || ''))
+        input(name='entryCode' type='password' value=(entryCode || ''))
 
         button(type="submit") #{title}
 
