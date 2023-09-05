@@ -8,6 +8,8 @@ html
       a(href="/") Home
           
     if currentUser 
+      div 
+        a(href="/post/create") Create Post
       if currentUser.status === 'user'
         div 
           a(href="/user/join") Join the club
