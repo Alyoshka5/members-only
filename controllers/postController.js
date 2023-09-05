@@ -41,13 +41,11 @@ exports.createPost = [
         .isLength({ min: 1 })
         .withMessage('You must include a title')
         .isLength({ max: 150 })
-        .withMessage('Title cannot be longer than 150 characters')
-        .escape(),
+        .withMessage('Title cannot be longer than 150 characters'),
 
     body('content', 'You must include a message in your post')
         .trim()
-        .isLength({ min: 1 })
-        .escape(),
+        .isLength({ min: 1 }),
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
@@ -96,13 +94,11 @@ exports.updatePost = [
         .isLength({ min: 1 })
         .withMessage('You must include a title')
         .isLength({ max: 150 })
-        .withMessage('Title cannot be longer than 150 characters')
-        .escape(),
+        .withMessage('Title cannot be longer than 150 characters'),
 
     body('content', 'You must include a message in your post')
         .trim()
-        .isLength({ min: 1 })
-        .escape(),
+        .isLength({ min: 1 }),
 
     asyncHandler(async (req, res, next) => {
         const errors = validationResult(req);
