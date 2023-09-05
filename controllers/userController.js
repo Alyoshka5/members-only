@@ -233,7 +233,10 @@ exports.adminGet = asyncHandler(async (req, res, next) => {
 });
 
 exports.adminPost = asyncHandler(async (req, res, next) => {
-  if (passcodes.adminCodes.includes(req.body.entryCode)) {
+  const passcodes = await Passcode.find({ forStatus: 'admin' }, 'code').exec();
+  const passcodeMatch = await passcodes.reduce(async (match, passcode) => match || await bcrypt.compare(req.body.entryCode, passcode.code), false)
+
+  if (passcodeMatch) {
     req.user.status = 'admin';
     const user = new User(req.user);
     await user.save();
